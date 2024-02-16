@@ -43,7 +43,7 @@ HeaderShared::HeaderShared ( const VoidAllocator &void_alloc )
 , info_text ( void_alloc )
 , user_flag ( false )
 , user_register ( 0 )
-, timestamp ( bp::microsec_clock::local_time() ) {}
+, timestamp ( SystemClock::now() ) {}
         
 Header::Header() 
 : header_shared ( NULL ) {}
@@ -112,10 +112,10 @@ Header::Header ( const std::string &name, HandlerPtr shmHdl, unsigned int header
         if ( locked ) unlock();
         return ss.str();
     }
-    const boost::posix_time::ptime &Header::timestampLocal() const {
+    const SystemClock::time_point &Header::timestampLocal() const {
         return header_local.timestamp;
     }
-    const boost::posix_time::ptime &Header::timestampShm() const {
+    const SystemClock::time_point &Header::timestampShm() const {
         return header_shared->timestamp;
     }
     void Header::updateTimestampLocal() {
@@ -147,8 +147,8 @@ Header::Header ( const std::string &name, HandlerPtr shmHdl, unsigned int header
     }
     bool Header::hasChanged() const {
         if ( header_local.timestamp == header_shared->timestamp ) return false;
-        bp::time_duration d =  header_local.timestamp - header_shared->timestamp;
-        bool check = d.is_negative();
+        auto d = std::chrono::duration_cast<std::chrono::microseconds>(header_local.timestamp - header_shared->timestamp);
+        bool check = d < std::chrono::microseconds(0);
         return check;
     }
     void Header::userFlag ( bool value ) {
@@ -246,7 +246,7 @@ Header::Header ( const std::string &name, HandlerPtr shmHdl, unsigned int header
                 header_shared = header_local.shm_handler->getShm()->construct<HeaderShared> ( header_local.shm_instance_name.c_str() ) ( a );
                 header_local.creator = true;
                 ScopedLock myLock ( header_shared->mutex );
-                header_shared->timestamp = bp::microsec_clock::local_time();
+                header_shared->timestamp = now();
                 header_local.timestamp = header_shared->timestamp;
                 header_shared->condition_mutex.unlock();
                 header_shared->condition.notify_all();

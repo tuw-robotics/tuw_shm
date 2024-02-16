@@ -112,8 +112,13 @@ std::string ShmFw::to_simple_string(const std::chrono::system_clock::time_point 
     return std::string(buffer);
 }
 
-boost::posix_time::ptime ShmFw::now() {
-    return boost::posix_time::microsec_clock::local_time();
+std::ostream& ShmFw::operator<<(std::ostream& os, const std::chrono::system_clock::time_point& timePoint) {
+    os << to_simple_string(timePoint);
+    return os;
+}
+
+std::chrono::system_clock::time_point ShmFw::now() {
+    return std::chrono::system_clock::now();
 }
 
 std::string ShmFw::DEFAULT_SEGMENT_NAME() {

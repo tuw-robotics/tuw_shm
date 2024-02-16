@@ -139,6 +139,7 @@ int main ( int argc, char **argv ) {
             std::cout << shmHeader.type_name();
         }
         if ( params.show_timestamp ) {
+            using namespace ShmFw;
             std::cout << ", " << shmHeader.timestampShm() ;
         }
         std::cout << std::endl;

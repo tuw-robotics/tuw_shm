@@ -77,9 +77,11 @@ namespace ShmFw
         return 180. * rad / M_PI;
     }
 
+    namespace sc = std::chrono;
     namespace bi = boost::interprocess;
     namespace bp = boost::posix_time;
     namespace bc = boost::container;
+    using SystemClock = std::chrono::system_clock;
 
     typedef bi::scoped_lock<bi::interprocess_mutex> ScopedLock;
 
@@ -104,7 +106,7 @@ namespace ShmFw
         CharString info_text;                   /// char array for general use @see info_text()
         bool user_flag;                         /// flag for general usage
         uint32_t user_register;                 /// register for general usage
-        bp::ptime timestamp;                    /// timestamp to tag the last change of the shared variable
+        SystemClock::time_point timestamp;      /// timestamp to tag the last change of the shared variable
         bi::interprocess_mutex mutex;           /// mutex
         bi::interprocess_mutex condition_mutex; /// mutex used for wait condition calles
         bi::interprocess_condition condition;   /// used for wait and notify condition calles
@@ -114,10 +116,10 @@ namespace ShmFw
     class HeaderLocal
     {
     public:
-        std::string shm_instance_name; /// name of the shared header in the shared memory segment
-        HandlerPtr shm_handler;        /// smart pointer to the shared memory segment header
-        bool creator;                  /// true if this process created the the shared varaible
-        bp::ptime timestamp;           /// time stamp of the last local access to this variable
+        std::string shm_instance_name;       /// name of the shared header in the shared memory segment
+        HandlerPtr shm_handler;              /// smart pointer to the shared memory segment header
+        bool creator;                        /// true if this process created the the shared varaible
+        SystemClock::time_point timestamp;   /// time stamp of the last local access to this variable
     };
 
     /// Common header of all shared memory segments
@@ -256,12 +258,12 @@ namespace ShmFw
          * Returns the local time stamp
          * @return timestamp of the local header
          **/
-        const boost::posix_time::ptime &timestampLocal() const;
+        const SystemClock::time_point &timestampLocal() const;
         /**
          * Returns the shared time stamp
          * @return timestamp of the shared header
          **/
-        const boost::posix_time::ptime &timestampShm() const;
+        const SystemClock::time_point &timestampShm() const;
         /**
          * Sets the local time stamp to now
          * Should after you just accessed the image (reading)

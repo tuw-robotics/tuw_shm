@@ -102,9 +102,11 @@ enum SerializeFormat {
 
 std::chrono::system_clock::time_point from_simple_string(const std::string &time_string);
 std::string to_simple_string(const std::chrono::system_clock::time_point &time_point);
-boost::posix_time::ptime now();
+std::chrono::system_clock::time_point now();
 std::string DEFAULT_SEGMENT_NAME();
 size_t DEFAULT_SEGMENT_SIZE();
+
+std::ostream& operator<<(std::ostream& os, const std::chrono::system_clock::time_point& timePoint);
 
 };
 #endif //SHARED_MEM_FW_H
