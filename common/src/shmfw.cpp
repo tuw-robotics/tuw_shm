@@ -84,6 +84,34 @@ boost::program_options::options_description Parameter::options (const std::strin
     return desc;
 }
 
+
+std::chrono::system_clock::time_point ShmFw::from_simple_string(const std::string &time_string){
+    std::tm tm = {};
+    std::istringstream ss(time_string);
+
+    // Parse the date and time from the string
+    ss >> std::get_time(&tm, "%Y-%m-%d %H:%M:%S");
+
+    if (ss.fail()) {
+        throw std::runtime_error("Failed to parse date and time from string");
+    }
+
+    // Convert tm struct to time_t
+    std::time_t time = std::mktime(&tm);
+
+    // Convert time_t to time_point
+    return std::chrono::system_clock::from_time_t(time);
+}
+
+std::string ShmFw::to_simple_string(const std::chrono::system_clock::time_point &time_point){
+    std::time_t time = std::chrono::system_clock::to_time_t(time_point);
+
+    // Convert time_t to a string in a simple format
+    char buffer[80]; // Choose an appropriate buffer size
+    std::strftime(buffer, sizeof(buffer), "%Y-%m-%d %H:%M:%S", std::localtime(&time));
+    return std::string(buffer);
+}
+
 boost::posix_time::ptime ShmFw::now() {
     return boost::posix_time::microsec_clock::local_time();
 }

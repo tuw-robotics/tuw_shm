@@ -6,6 +6,11 @@ set(TUWSHMFW_PATCH_VERSION 0)
 set(TUWSHMFW_VERSION
   ${TUWSHMFW_MAJOR_VERSION}.${TUWSHMFW_MINOR_VERSION}.${TUWSHMFW_PATCH_VERSION})
 
+#set(CMAKE_C_COMPILER /usr/bin/gcc-12)
+#set(CMAKE_CXX_COMPILER /usr/bin/g++-12)
+#set(CMAKE_CXX_STANDARD 20)
+#set(CMAKE_CXX_STANDARD_REQUIRED YES)
+
 # Offer the user the choice of overriding the installation directories
 set(INSTALL_LIB_DIR lib CACHE PATH "Installation directory for libraries")
 set(INSTALL_BIN_DIR bin CACHE PATH "Installation directory for executables")

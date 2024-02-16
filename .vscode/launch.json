@@ -10,10 +10,11 @@
           "description": "Which ros pkg do like?",
           "options": [
             "shmfw_demo",
+            "shmfw_demo_lexical",
             "shmfw_usage_var",
             "shmfw_usage_vector"
           ],
-          "default": "shmfw_usage_vector"
+          "default": "shmfw_demo"
         },
         {
           "type": "pickString",

@@ -34,6 +34,7 @@
 #define SHARED_MEM_FW_H
 
 #include <string>
+#include <chrono>
 #include <boost/program_options/options_description.hpp>
 #include <boost/date_time/posix_time/ptime.hpp>
 
@@ -98,6 +99,9 @@ enum SerializeFormat {
     FORMAT_TXT = 3
 };
 
+
+std::chrono::system_clock::time_point from_simple_string(const std::string &time_string);
+std::string to_simple_string(const std::chrono::system_clock::time_point &time_point);
 boost::posix_time::ptime now();
 std::string DEFAULT_SEGMENT_NAME();
 size_t DEFAULT_SEGMENT_SIZE();
