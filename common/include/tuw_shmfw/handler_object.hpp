@@ -34,7 +34,6 @@
 #define SHARED_MEM_HANDLER_OBJECT
 
 #include <tuw_shmfw/variable.hpp>
-#include <boost/lexical_cast.hpp>
 #include <boost/shared_ptr.hpp>
 #include <boost/algorithm/string.hpp>
 

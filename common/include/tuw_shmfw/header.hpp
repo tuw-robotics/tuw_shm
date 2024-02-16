@@ -57,7 +57,6 @@ namespace boost
  */
 namespace ShmFw
 {
-
     /**
      * converts angle degrees into rad
      * @param deg angle in degrees

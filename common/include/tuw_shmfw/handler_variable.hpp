@@ -34,6 +34,8 @@
 #define SHARED_MEM_HANDLER_VAR
 
 #include <tuw_shmfw/handler_object.hpp>
+#include <tuw_shmfw/string_cast.hpp>
+#include <string>
 
 namespace ShmFw {
   
@@ -70,17 +72,18 @@ public:
         return v.name();
     }
     std::string value() const {
-      return boost::lexical_cast<std::string>(*v);
+      using namespace std;
+      return to_string(*v);
     }
     virtual std::string value(uint32_t i) const {
-	if( i > 0) return "Out of bound";
-	return value();	
+      if( i > 0) return "Out of bound";
+      return value();	
     }
     virtual uint32_t size() const {
         return 1;
     }
     void value(const std::string &str) {
-        *v = boost::lexical_cast<T>(str);
+        from_string(str, *v);
     }
     int construct ( const std::string &name, HandlerPtr &shmHdl, unsigned int size = 1 ){
       return v.construct(name, shmHdl);

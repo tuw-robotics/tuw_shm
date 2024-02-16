@@ -6,6 +6,7 @@ add_library(tuw_shmfw
   header.cpp
   variable.cpp
   handler_object.cpp
+  string_cast.cpp
 )
 
 find_package (Boost REQUIRED COMPONENTS date_time thread program_options )

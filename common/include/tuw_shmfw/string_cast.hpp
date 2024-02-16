@@ -1,6 +1,6 @@
 /***************************************************************************
  *   Software License Agreement (BSD License)                              *
- *   Copyright (C) 2012 by Markus Bader <markus.bader@tuwien.ac.at>        *
+ *   Copyright (C) 2024 by Markus Bader <markus.bader@tuwien.ac.at>        *
  *                                                                         *
  *   Redistribution and use in source and binary forms, with or without    *
  *   modification, are permitted provided that the following conditions    *
@@ -30,98 +30,54 @@
  *   POSSIBILITY OF SUCH DAMAGE.                                           *
  ***************************************************************************/
 
-#ifndef SHARED_MEM_HANDLER_VECTOR
-#define SHARED_MEM_HANDLER_VECTOR
+#ifndef SHARED_STRING_CAST_HPP
+#define SHARED_STRING_CAST_HPP
 
-#include <tuw_shmfw/handler_object.hpp>
-#include <tuw_shmfw/vector.hpp>
+#include <chrono>
+#include <iostream>
+#include <iomanip>
+#include <string>
 
-namespace ShmFw {
+/**
+ * Namespace for the fast and dynamic shared memory framework
+ */
+namespace ShmFw
+{
+    template <typename T>
+    std::string to_string_default(const T &o)
+    {
+        std::stringstream ss;
+        ss << o;
+        return ss.str();
+    }
+    std::string to_string(const float &o);
+    std::string to_string(const double &o);
+    std::string to_string(const bool &o);
+    std::string to_string(const char &o);
+    std::string to_string(const signed char &o);
+    std::string to_string(const short &o);
+    std::string to_string(const int &o);
+    std::string to_string(const long &o);
+    std::string to_string(const long long &o);
+    std::string to_string(const unsigned char &o);
+    std::string to_string(const unsigned short &o);
+    std::string to_string(const unsigned int &o);
+    std::string to_string(const unsigned long &o);
+    std::string to_string(const unsigned long long&o);
 
-template <class T>
-class HandlerVector : public HandlerObject {
-public:
-private:
-    ShmFw::Vector<T> v;
-public:
-    HandlerVector(const std::string &name, HandlerPtr &shmHdl) {
-        v.construct (name, shmHdl);
-    }
-    std::string type_name () {
-        return v.type_name();
-    }
-    virtual void it_has_changed() {
-      v.itHasChanged();
-    }
-    virtual void lock() {
-      v.try_lock();
-    }
-    virtual void unlock() {
-      v.unlock();
-    }
-    virtual bool locked() {
-      return v.locked();
-    }
-    virtual std::string timestamp() {
-        return to_simple_string(v.timestampShm()) ;
-    }
-    std::string name () {
-        return v.name();
-    }
-    std::string value() const {
-      std::stringstream ss;
-      ss << "[ ";
-      for(size_t i = 0; i < v.size(); i++){
-        if( i != 0) ss << "; ";
-	      ss << v[i];
-      }
-      ss << " ]";
-      return ss.str();
-    }
-    virtual std::string value(uint32_t i) const {
-	    if( i > size()) return "Out of bound";
-      return to_string(v[i]);
-    }
-    virtual uint32_t size() const {
-        return v.size();
-    }
-    /**
-     * @todo not jet finished
-     **/
-    void value(const std::string &str) {
-      size_t start = str.find("[");
-      if((start == std::string::npos)) return;
-      size_t end = str.find_last_of("]");
-      if((end <= start) || (end == std::string::npos)) return;
-      std::string data = str.substr(start+1, end-1); 
-      bool read_entries = true;
-      start = 0;
-      v.clear();
-      T entry;
-      while(read_entries){
-        end = data.find(",", start);
-        if( end == std::string::npos){
-          v->push_back(from_string(data, entry) );
-          read_entries = false;
-        } else {
-          std::string s = data.substr(start, end);
-          v->push_back(from_string(s, entry) );
-          data = data.substr(end+1);
-        }
-      }
-    }
-    int construct ( const std::string &name, Handler &shmHdl ){
-      return v.construct(name, shmHdl);
-    }
-};
-
-
-};
-
-
-
-#endif //SHARED_MEM_HANDLER_VAR
-
-
-
-
+    float &from_string(const std::string &str, float &des);
+    double &from_string(const std::string &str, double &des);
+    bool &from_string(const std::string &str, bool &des);
+    char &from_string(const std::string &str, char &des);
+    signed char &from_string(const std::string &str, signed char &des);
+    short &from_string(const std::string &str, short &des);
+    int &from_string(const std::string &str, int &des);
+    long &from_string(const std::string &str, long &des);
+    long long &from_string(const std::string &str, long long &des);
+    unsigned char& from_string(const std::string &str, unsigned char& des);
+    unsigned short& from_string(const std::string &str, unsigned short& des);
+    unsigned int& from_string(const std::string &str, unsigned int& des);
+    unsigned long& from_string(const std::string &str, unsigned long& des);
+    unsigned long long& from_string(const std::string &str, unsigned long long& des);
+}
+#endif // SHARED_STRING_CAST_HPP

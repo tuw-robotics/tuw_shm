@@ -91,6 +91,12 @@ int main ( int argc, char *argv[] ) {
     std::cout << a << std::endl;
     *a.get() = 1.2;
     std::cout << a << std::endl;
+
+
+    ShmFw::Var<bool> b ( "b", shmHdl);
+    b.set ( false );
+    std::cout << b.info_shm();
+    std::cout << std::endl;
     
     exit ( 0 );
 

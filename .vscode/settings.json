@@ -73,4 +73,8 @@
         "variant": "cpp",
         "*.inc": "cpp"
     }
+    "files.exclude": {
+        "build": true,
+        ".gitignore": true
+    },
 }

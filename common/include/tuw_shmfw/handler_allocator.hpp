@@ -69,7 +69,9 @@ public:
         return v.name();
     }
     std::string value() const {
-      return boost::lexical_cast<std::string>(*v);
+      std::stringstream ss;
+      ss << *v;
+      return ss.str();
     }
     virtual std::string value(uint32_t i) const {
 	if( i > size()) return "Out of bound";

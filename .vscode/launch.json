@@ -10,21 +10,11 @@
           "description": "Which ros pkg do like?",
           "options": [
             "shmfw_demo",
-            "shmfw_demo_lexical",
+            "demo_string_cast",
             "shmfw_usage_var",
             "shmfw_usage_vector"
           ],
           "default": "shmfw_demo"
-        },
-        {
-          "type": "pickString",
-          "id": "apps",
-          "description": "Which ros pkg do like?",
-          "options": [
-            "shmfw_editor",
-            "shmfw_admin"
-          ],
-          "default": "shmfw_editor"
         },
     ],
     "configurations":  [
@@ -50,10 +40,10 @@
             ]
         }
         {
-            "name": "launch app",
+            "name": "shmfw_editor",
             "type": "cppdbg",
             "request": "launch",
-            "program": "${workspaceFolder}/build/common/apps/${input:apps}",
+            "program": "${workspaceFolder}/build/common/apps/editor/shmfw_editor",
             "args": [],
             "stopAtEntry": false,
             "cwd": "${workspaceFolder}",
