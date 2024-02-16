@@ -98,7 +98,7 @@ Header::Header ( const std::string &name, HandlerPtr shmHdl, unsigned int header
         return header_shared->mutex;
     }
     bool Header::timed_lock ( unsigned int ms ) {
-        bp::ptime timeout = bp::microsec_clock::universal_time() + bp::milliseconds ( ms );
+        boost::posix_time::ptime timeout = boost::posix_time::microsec_clock::universal_time() + boost::posix_time::milliseconds ( ms );
         return header_shared->mutex.timed_lock ( timeout );
     }
     std::string Header::info_shm ( bool type ) {
@@ -134,8 +134,7 @@ Header::Header ( const std::string &name, HandlerPtr shmHdl, unsigned int header
         header_shared->condition.wait ( lock );
     }
     bool Header::timed_wait ( unsigned int ms ) {
-        using namespace bp;
-        bp::ptime timeout = bp::microsec_clock::universal_time() + bp::milliseconds ( ms );
+        boost::posix_time::ptime timeout = boost::posix_time::microsec_clock::universal_time() + boost::posix_time::milliseconds ( ms );
         ScopedLock lock ( header_shared->condition_mutex );
         return header_shared->condition.timed_wait ( lock, timeout );
     }

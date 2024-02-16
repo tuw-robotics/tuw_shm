@@ -36,7 +36,6 @@
 #include <string>
 #include <chrono>
 #include <boost/program_options/options_description.hpp>
-#include <boost/date_time/posix_time/ptime.hpp>
 
 namespace ShmFw {
 

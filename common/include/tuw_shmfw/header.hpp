@@ -79,7 +79,6 @@ namespace ShmFw
 
     namespace sc = std::chrono;
     namespace bi = boost::interprocess;
-    namespace bp = boost::posix_time;
     namespace bc = boost::container;
     using SystemClock = std::chrono::system_clock;
 

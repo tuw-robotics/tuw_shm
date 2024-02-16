@@ -32,6 +32,7 @@
 
 #include <iostream>
 #include <stdlib.h>
+#include <iomanip>
 #include <tuw_shmfw/header.hpp>
 #include <tuw_shmfw/handler_variable.hpp>
 

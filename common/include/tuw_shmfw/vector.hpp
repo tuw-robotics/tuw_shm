@@ -179,9 +179,9 @@ public:
      * @param des
      * @return copy of the shared timestamp
      **/
-    bp::ptime get ( std::vector<T> &des ) {
+    SystemClock::time_point get ( std::vector<T> &des ) {
         lock();
-        bp::ptime t = timestampShm();;
+        SystemClock::time_point t = timestampShm();;
         des.resize ( get()->size() );
         for ( size_t i = 0; i < des.size(); i++ ) {
             des[i] = ( *get() ) [i];
@@ -195,9 +195,9 @@ public:
      * @param des
      * @return copy of the shared timestamp
      **/
-    bp::ptime get ( T &des, size_type n ) {
+    SystemClock::time_point get ( T &des, size_type n ) {
         lock();
-        bp::ptime t = timestampShm();;
+        SystemClock::time_point t = timestampShm();;
         des = ( *get() ) [n];
         unlock();
         updateTimestampLocal();

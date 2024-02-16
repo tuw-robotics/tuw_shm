@@ -76,8 +76,7 @@ HandlerObjectPtr HandlerObject::open ( const std::string &name, HandlerPtr &shmH
     RETURN_IF_TYPE_VAR ( uint16_t );
     RETURN_IF_TYPE_VAR ( uint32_t );
     RETURN_IF_TYPE_VAR ( uint64_t );
-    RETURN_IF_TYPE_VAR ( boost::posix_time::ptime );
-    RETURN_IF_TYPE_VAR ( boost::posix_time::time_duration );
+    //RETURN_IF_TYPE_VAR ( std::chrono::system_clock::time_point );
 
 
 #define RETURN_IF_TYPE_VECTOR( TYPE ) if(shmHeader.isType<ShmFw::Vector< TYPE > >()) return HandlerObjectPtr( new ShmFw::HandlerVector< TYPE >( name, shmHdl));
@@ -94,8 +93,7 @@ HandlerObjectPtr HandlerObject::open ( const std::string &name, HandlerPtr &shmH
     RETURN_IF_TYPE_VECTOR ( unsigned int );
     RETURN_IF_TYPE_VECTOR ( unsigned long );
     RETURN_IF_TYPE_VECTOR ( unsigned long long );
-    RETURN_IF_TYPE_VECTOR ( boost::posix_time::ptime );
-    RETURN_IF_TYPE_VECTOR ( boost::posix_time::time_duration );
+    //RETURN_IF_TYPE_VECTOR ( std::chrono::system_clock::time_point );
 
     return HandlerObjectPtr();
 }
