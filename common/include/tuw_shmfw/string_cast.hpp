@@ -64,6 +64,7 @@ namespace ShmFw
     std::string to_string(const unsigned int &o);
     std::string to_string(const unsigned long &o);
     std::string to_string(const unsigned long long&o);
+    std::string to_string(const std::chrono::system_clock::time_point &o);
 
     float &from_string(const std::string &str, float &des);
     double &from_string(const std::string &str, double &des);
@@ -79,5 +80,6 @@ namespace ShmFw
     unsigned int& from_string(const std::string &str, unsigned int& des);
     unsigned long& from_string(const std::string &str, unsigned long& des);
     unsigned long long& from_string(const std::string &str, unsigned long long& des);
+    std::chrono::system_clock::time_point &from_string(const std::string &time_string, std::chrono::system_clock::time_point& des);
 }
 #endif // SHARED_STRING_CAST_HPP

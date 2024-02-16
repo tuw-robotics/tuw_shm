@@ -88,10 +88,18 @@ namespace ShmFw
     {
         return std::to_string(o);
     }
-    std::string to_string(const unsigned long long&o)
+    std::string to_string(const unsigned long long &o)
     {
         return std::to_string(o);
     }
+
+    std::string to_string(const std::chrono::system_clock::time_point &o){
+        std::time_t time = std::chrono::system_clock::to_time_t(o);
+        char buffer[80];
+        std::strftime(buffer, sizeof(buffer), "%Y-%m-%d %H:%M:%S", std::localtime(&time));
+        return std::string(buffer);
+    }
+
     float &from_string(const std::string &str, float &des)
     {
         des = std::stof(str);
@@ -179,4 +187,18 @@ namespace ShmFw
         des = std::stoll(str);
         return des;
     }
+    std::chrono::system_clock::time_point &from_string(const std::string &time_string, std::chrono::system_clock::time_point &des)
+    {
+        std::tm tm = {};
+        std::istringstream ss(time_string);
+        ss >> std::get_time(&tm, "%Y-%m-%d %H:%M:%S");
+        if (ss.fail())
+        {
+            throw std::runtime_error("Failed to parse date and time from string");
+        }
+        std::time_t time = std::mktime(&tm);
+        des = std::chrono::system_clock::from_time_t(time);
+        return des;
+    }
+
 }
